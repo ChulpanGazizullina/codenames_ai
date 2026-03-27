@@ -1,0 +1,83 @@
+#words-container {
+    margin-top: 60px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(5, auto);
+    gap: 10px;
+    max-width: 600px;
+    margin: 0 auto;
+
+}
+
+.word-card {
+    padding: 10px 15px;
+    border: none;
+    outline: 1px solid #7f07b6;
+    cursor: default;
+    background-color: lch(94.8% 0.01 296.81);
+    text-align: center;
+    border-radius: 10px;
+}
+
+#hint {
+    margin-top: 60px;
+    font-weight: bold;
+}
+
+.green {
+    background-color: rgb(133, 212, 115);
+}
+
+.orange {
+    background-color: rgb(242, 213, 175);
+}
+
+.black {
+    background-color: hsla(0, 0%, 20%, 0.986);
+}
+
+.text {
+    font-size: 16px;
+    line-height: 1.6;
+    max-width: 600px;
+    margin-bottom: 16px;
+}
+
+body {
+    font-family: 'Merriweather', serif;
+}
+
+nav a {
+    font-family: 'Merriweather', serif;
+    font-size: 20px;
+    color: rgb(54, 11, 228);
+}
+
+.content {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+button {
+    margin-top: 40px;
+    font-family: 'Merriweather', serif;
+    font-size: 20px;
+    border-radius: 10px;
+
+}
+.rules-image {
+    width: 100%;
+    max-width: 500px;
+    display: block;
+    margin: 0 auto 20px auto;
+    border-radius: 10px;
+}
+
+.game_status {
+    font-family: 'Merriweather', serif;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 60px;
+    color: #000000;
+}

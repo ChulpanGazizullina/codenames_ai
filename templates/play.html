@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block title %} Play {% endblock %}
+
+{% block content %}
+
+<div class="game_status">
+    Осталось угадать слов: <span id="words-left">{{ words_left }}</span>
+</div>
+
+
+<div id="words-container">
+    {% for word in words %}
+    <div class="word-card" onclick="checkword(this)">{{ word }}</div>
+    {% endfor %}
+</div>
+
+<button id='get_hint_btn' onclick="getHint()">Получить подсказку</button>
+
+<p id="hint"></p>
+
+<div id="all_hints"></div>
+
+<script>
+
+
+    async function checkword(element) {
+        const word = element.innerText;
+
+        const response = await fetch('/checkword', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ word })
+        });
+
+        const data = await response.json();
+        if (data.result === "green") {
+            element.classList.add("green");
+
+        } else if (data.result === 'black') {
+            element.classList.add("black");
+        } else {
+            element.classList.add('orange')
+        };
+
+        element.onclick = null
+        document.getElementById('words-left').innerText = data.words_left;
+
+
+        if (data.game_over) {
+            alert(data.message);
+            document.querySelectorAll('.word-card').forEach(el => el.onclick = null);
+            document.getElementById('get_hint_btn').disabled = true;
+
+            const restartBtn = document.createElement('button');
+            restartBtn.innerText = "Играть заново";
+            restartBtn.onclick = () => window.location.href = "/";
+            document.body.appendChild(restartBtn);
+
+        }
+
+    }
+
+
+    async function getHint() {
+        try {
+            const response = await fetch("/generate_hint");
+            const data = await response.json();
+
+            if (data.error) {
+                document.getElementById("hint").innerText = data.error;
+                return;
+            }
+
+            document.getElementById("hint").innerText =
+                "Подсказка: " + data.hint + ' (' + data.n_words + ' слова)';
+
+            document.getElementById('all_hints').innerText =
+                'Все подсказки: ' + data.all_hints;
+        } catch (err) {
+            document.getElementById("hint").innerText = "Ошибка сервера";
+            console.error(err);
+        }
+    }
+
+
+</script>
+{% endblock %}
